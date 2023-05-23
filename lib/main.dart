@@ -1,8 +1,10 @@
 import 'package:admin_shop/config/routes/route_generator.dart';
+import 'package:admin_shop/config/theme/theme.dart';
 import 'package:admin_shop/data/local/local_data.dart';
 import 'package:admin_shop/domain/models/product.dart';
 import 'package:admin_shop/domain/models/user.dart';
 import 'package:admin_shop/presentation/Bloc/bloc/auth_bloc.dart';
+import 'package:admin_shop/presentation/Bloc/bloc/metric_bloc.dart';
 import 'package:admin_shop/presentation/Bloc/bloc/product_bloc.dart';
 import 'package:admin_shop/presentation/Bloc/events/auth_events.dart';
 import 'package:flutter/material.dart';
@@ -20,8 +22,8 @@ void main() async {
 }
 
 class AdminApp extends StatelessWidget {
-  AdminApp({super.key, required this.authState});
-  String authState;
+  const AdminApp({super.key, required this.authState});
+  final String authState;
 
   @override
   Widget build(BuildContext context) {
@@ -29,23 +31,22 @@ class AdminApp extends StatelessWidget {
       providers: [
         BlocProvider<AuthBloc>(create: (BuildContext context) => AuthBloc()),
         BlocProvider<AuthStatusBloc>(create: (BuildContext context) => AuthStatusBloc(authState != '')),
-        BlocProvider<ProductBloc>(create: (BuildContext context) => ProductBloc(const Product('', '', '', 0, 0, '').toMap())),
+        BlocProvider<ProductBloc>(create: (BuildContext context) => ProductBloc(const Product('', '', '', 0, 0, '', '').toMap())),
         BlocProvider<ProductListBloc>(create: (BuildContext context) => ProductListBloc()),
-        BlocProvider<UserBloc>(create: (BuildContext context) => UserBloc(const User('', '', ''))),
+        BlocProvider<UserBloc>(create: (BuildContext context) => UserBloc(User('', '', ''))),
         BlocProvider<DeleteProductBloc>(create: (BuildContext context) => DeleteProductBloc()),
+        BlocProvider<MetricBloc>(create: (BuildContext context) => MetricBloc()),
       ],
       child: BlocBuilder<AuthStatusBloc, bool>(
         builder: (context, state) {
           if (state) {
-            print('calling user...');
             context.read<UserBloc>().add(AlreadyAuthEvent());
           }
-          print('main.dart -> $state');
           return MaterialApp(
-            initialRoute: state && authState.isNotEmpty ? '/' : '/sign-in',
+            initialRoute: state && authState.isNotEmpty ? '/' : '/start',
             onGenerateRoute: RouteGenerator.generateRoute,
             debugShowCheckedModeBanner: false,
-            theme: ThemeData.dark(),
+            theme: themeData(),
           );
         },
       ),

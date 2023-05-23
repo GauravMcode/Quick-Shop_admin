@@ -27,8 +27,8 @@ class AuthRepository {
     final result = json.decode(response.body);
     if (response.statusCode == 200) {
       await JwtProvider.saveJwt(result['token']);
-      final jwt = await JwtProvider.getJwt();
-      print('sign-in-jwt : $jwt');
+      // final jwt = await JwtProvider.getJwt();
+      // print('sign-in-jwt : $jwt');
       await UserIdProvider.saveId(result['data']['_id']);
       return {
         'data': User.fromMap(result['data']),
@@ -66,7 +66,22 @@ class AuthRepository {
 
   static Future<Map> getUser() async {
     final jwt = await JwtProvider.getJwt();
-    Response response = await DataProvider.getData('user', jwt: jwt);
+    Response response = await DataProvider.getData('user/admin', jwt: jwt);
+    final result = json.decode(response.body);
+    if (response.statusCode == 200) {
+      await UserIdProvider.saveId(result['data']['_id']);
+      return {
+        'data': User.fromMap(result['data']),
+        'status': 200,
+      };
+    }
+    return {'status': response.statusCode, 'message': result['message']};
+  }
+
+  static Future<Map> updateUser(User user) async {
+    final jwt = await JwtProvider.getJwt();
+    final updatedUser = user.toJson();
+    Response response = await DataProvider.postData('user-update/admin', updatedUser, jwt: jwt);
     final result = json.decode(response.body);
     if (response.statusCode == 200) {
       await UserIdProvider.saveId(result['data']['_id']);

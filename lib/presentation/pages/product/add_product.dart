@@ -26,6 +26,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Product? recievedProduct;
   _AddProductPageState({this.recievedProduct});
   final _storageref = FirebaseStorage.instance.ref('products').child('${DateTime.now()}');
+  List<Color> gradColors = [const Color(0xff2f3542), const Color(0xffced6e0)];
 
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _titleController;
@@ -34,6 +35,7 @@ class _AddProductPageState extends State<AddProductPage> {
   late final TextEditingController _qtyController;
 
   late String _id;
+  late String _category;
 
   getId() async {
     _id = await UserIdProvider.getId();
@@ -47,6 +49,7 @@ class _AddProductPageState extends State<AddProductPage> {
     _descriptionController = TextEditingController(text: recievedProduct?.description);
     _priceController = TextEditingController(text: recievedProduct?.price.toString());
     _qtyController = TextEditingController(text: recievedProduct?.quantity.toString());
+    _category = recievedProduct?.category ?? '';
   }
 
   @override
@@ -57,11 +60,13 @@ class _AddProductPageState extends State<AddProductPage> {
     _qtyController.dispose();
     _file = null;
     _imageUrl = '';
+    _category = '';
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return BlocBuilder<ProductBloc, Map>(
       builder: (context, state) {
         return WillPopScope(
@@ -73,51 +78,111 @@ class _AddProductPageState extends State<AddProductPage> {
             }
             return true;
           },
-          child: Scaffold(
-            body: SingleChildScrollView(
-              child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(height: 200, child: PickImage(_storageref, recievedUrl: recievedProduct?.imageUrl)),
-                      const SizedBox(height: 50),
-                      FormFieldInput('Title', false, _titleController),
-                      const SizedBox(height: 50),
-                      FormFieldInput('Description', false, _descriptionController, height: 150),
-                      const SizedBox(height: 50),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          FormFieldInput('Price', false, _priceController, width: 100),
-                          const SizedBox(height: 20),
-                          FormFieldInput('Quantity', false, _qtyController, width: 100),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              final product = Product(
-                                _titleController.text,
-                                _descriptionController.text,
-                                "${_imageUrl == '' && recievedProduct != null ? recievedProduct?.imageUrl : _imageUrl}",
-                                int.parse(_priceController.text),
-                                int.parse(_qtyController.text),
-                                _id,
-                                id: recievedProduct?.id,
-                              );
-                              context.read<ProductBloc>().add(AddProductEvent(product));
-                              if (recievedProduct != null) {
-                                context.read<ProductBloc>().add(GetProductEvent(recievedProduct?.id as String));
-                              }
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          child: Text(recievedProduct == null ? "Add Product" : "Update Product")),
-                    ],
-                  )),
+          child: SafeArea(
+            child: Scaffold(
+              body: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: gradColors.reversed.toList(),
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    stops: const [0.1, 0.99],
+                  ),
+                ),
+                child: Stack(
+                  children: [
+                    SingleChildScrollView(
+                      child: Form(
+                          key: _formKey,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              SizedBox(height: 200, child: PickImage(_storageref, recievedUrl: recievedProduct?.imageUrl)),
+                              const SizedBox(height: 25),
+                              DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                    hintText: 'Select Category',
+                                    hintStyle: TextStyle(color: Theme.of(context).primaryColor),
+                                    enabledBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(40),
+                                    )),
+                                items: List.generate(categories.length, (index) => DropdownMenuItem(value: categories[index], child: Text(categories[index]))),
+                                onChanged: (value) {
+                                  setState(() {
+                                    _category = value!;
+                                  });
+                                },
+                              ),
+                              const SizedBox(height: 25),
+                              SizedBox(width: size.width, height: 55, child: FormFieldInput('Title', false, _titleController)),
+                              const SizedBox(height: 50),
+                              PhysicalModel(
+                                elevation: 40,
+                                shape: BoxShape.circle,
+                                color: Colors.grey,
+                                child: TextField(
+                                  controller: _descriptionController,
+                                  autocorrect: true,
+                                  enableSuggestions: true,
+                                  maxLines: 5,
+                                  onEditingComplete: () {
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                  },
+                                  onTapOutside: (event) {
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                  },
+                                  onSubmitted: (newValue) {
+                                    FocusManager.instance.primaryFocus?.unfocus();
+                                  },
+                                  decoration: InputDecoration(
+                                    hintText: 'Your Review',
+                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
+                                    fillColor: Colors.white,
+                                    hintStyle: TextStyle(color: Theme.of(context).primaryColor),
+                                    contentPadding: const EdgeInsets.all(20),
+                                    filled: true,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 50),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  SizedBox(width: size.width * 0.5, child: FormFieldInput('Price', false, _priceController)),
+                                  SizedBox(width: size.width * 0.5, child: FormFieldInput('Quantity', false, _qtyController)),
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                onPressed: () {
+                                  if (_formKey.currentState!.validate()) {
+                                    final product = Product(
+                                      _titleController.text,
+                                      _descriptionController.text,
+                                      "${_imageUrl == '' && recievedProduct != null ? recievedProduct?.imageUrl : _imageUrl}",
+                                      int.parse(_priceController.text),
+                                      int.parse(_qtyController.text),
+                                      _id,
+                                      _category,
+                                      id: recievedProduct?.id,
+                                    );
+                                    context.read<ProductBloc>().add(AddProductEvent(product));
+                                    if (recievedProduct != null) {
+                                      context.read<ProductBloc>().add(GetProductEvent(recievedProduct?.id as String));
+                                    }
+                                    Navigator.of(context).pop();
+                                  }
+                                },
+                                child: Text(recievedProduct == null ? "Add Product" : "Update Product"),
+                              ),
+                            ],
+                          )),
+                    ),
+                    Positioned(child: IconButton(onPressed: () => Navigator.of(context).pop(), icon: const Icon(Icons.arrow_back, size: 30)))
+                  ],
+                ),
+              ),
             ),
           ),
         );
@@ -193,18 +258,17 @@ class _PickImageState extends State<PickImage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0),
-      child: Center(
-        child: _file == null && recievedUrl == null
-            ? ClipOval(child: ElevatedButton.icon(onPressed: () => showSheet(), icon: const Icon(Icons.image), label: const Text('Pick an Image')))
-            : _imageUrl == '' && recievedUrl == null
-                ? const CircularProgressIndicator()
-                : GestureDetector(
-                    child: Image.network('${recievedUrl != null && _imageUrl == '' ? recievedUrl : _imageUrl}'),
-                    onTap: () => showSheet(),
-                  ),
-      ),
+    return Center(
+      child: _file == null && recievedUrl == null
+          ? ElevatedButton.icon(onPressed: () => showSheet(), icon: const Icon(Icons.image), label: const Text('Pick an Image'))
+          : _imageUrl == '' && recievedUrl == null
+              ? const CircularProgressIndicator()
+              : GestureDetector(
+                  child: Image.network('${recievedUrl != null && _imageUrl == '' ? recievedUrl : _imageUrl}'),
+                  onTap: () => showSheet(),
+                ),
     );
   }
 }
+
+final List<String> categories = ['All', 'Electronics', 'Clothing', 'Books', 'Jwellery', 'Household', 'Office', 'Shoes'];

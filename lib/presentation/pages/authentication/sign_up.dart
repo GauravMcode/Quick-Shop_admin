@@ -3,6 +3,7 @@ import 'package:admin_shop/presentation/Bloc/events/auth_events.dart';
 import 'package:admin_shop/presentation/widgets/input_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lottie/lottie.dart';
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
@@ -16,6 +17,7 @@ class _SignUpPageState extends State<SignUpPage> {
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  List<Color> gradColors = [const Color.fromARGB(255, 40, 48, 57), const Color(0xff2f3542)];
 
   @override
   void dispose() {
@@ -27,49 +29,98 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return BlocBuilder<AuthBloc, Map>(
       builder: (context, state) {
         if (state['status'] == 201) {
-          WidgetsBinding.instance.addPostFrameCallback((_) => {Navigator.of(context).pushReplacementNamed('/')});
+          WidgetsBinding.instance.addPostFrameCallback((_) => Navigator.of(context).pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false));
         }
-        return Scaffold(
-          body: SingleChildScrollView(
-            child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    const SizedBox(height: 250),
-                    FormFieldInput('Name', false, _nameController),
-                    const SizedBox(height: 50),
-                    FormFieldInput('Email', false, _emailController),
-                    const SizedBox(height: 50),
-                    FormFieldInput('Password', false, _passwordController),
-                    const SizedBox(height: 20),
-                    ElevatedButton(
-                        onPressed: () {
-                          if (_formKey.currentState!.validate()) {
-                            context.read<AuthBloc>().add(SignUpEvent(_nameController.text, _emailController.text, _passwordController.text));
-                            context.read<AuthStatusBloc>().add(AuthStateEvent());
-                          }
-                        },
-                        child: const Text('Sign-Up')),
-                    const SizedBox(height: 10),
-                    const ElevatedButton(onPressed: null, child: Text('Sign-Up with Google')),
-                    const SizedBox(height: 50),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 100),
-                      child: Row(children: [
-                        const Text('Already Have Account?'),
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: const Text('Sign-In'),
+        return WillPopScope(
+          onWillPop: () async {
+            context.read<AuthBloc>().add(ResetAuthEvent());
+            return true;
+          },
+          child: SafeArea(
+            child: Scaffold(
+              body: SizedBox(
+                width: size.width,
+                height: size.height,
+                child: SingleChildScrollView(
+                  child: Form(
+                      key: _formKey,
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(gradient: LinearGradient(colors: gradColors.reversed.toList(), begin: Alignment.topLeft, end: Alignment.bottomCenter, stops: const [0.2, 0.7])),
+                        child: Stack(
+                          children: [
+                            Opacity(
+                              opacity: 0.4,
+                              child: Padding(
+                                padding: const EdgeInsets.only(top: 200.0),
+                                child: Lottie.asset(
+                                  'assets/81256-e-commerce.json',
+                                  width: size.width,
+                                  height: size.height * 0.4,
+                                  fit: BoxFit.fill,
+                                ),
+                              ),
+                            ),
+                            Column(children: [
+                              const SizedBox(height: 10),
+                              Text('Welcome,\nJoin to Sell\nEasy & Fast', style: Theme.of(context).textTheme.labelLarge),
+                              const SizedBox(height: 180),
+                              FormFieldInput('Name', false, _nameController),
+                              const SizedBox(height: 20),
+                              FormFieldInput('Email', false, _emailController),
+                              const SizedBox(height: 20),
+                              FormFieldInput(
+                                'Password',
+                                false,
+                                _passwordController,
+                                validator: ((value) {
+                                  if (value.length < 5) {
+                                    return "minimum 5 characters";
+                                  }
+                                  return null;
+                                }),
+                              ),
+                              const SizedBox(height: 20),
+                              ElevatedButton(
+                                  onPressed: () {
+                                    if (_formKey.currentState!.validate()) {
+                                      context.read<AuthBloc>().add(SignUpEvent(_nameController.text, _emailController.text, _passwordController.text));
+                                    }
+                                  },
+                                  child: const Text('Sign-Up')),
+                              const SizedBox(height: 20),
+                              state['status'] != 201 && state['message'] != null
+                                  ? Text(
+                                      'Error: "${state['message']}"',
+                                      style: const TextStyle(color: Colors.red, fontSize: 15),
+                                    )
+                                  : const SizedBox.shrink(),
+                              const SizedBox(height: 20),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 80),
+                                child: Row(
+                                  children: [
+                                    const Text('Already Have Account?'),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).popAndPushNamed('/sign-in');
+                                      },
+                                      child: const Text('Log-In'),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              const SizedBox(height: 50),
+                            ])
+                          ],
                         ),
-                      ]),
-                    )
-                  ],
-                )),
+                      )),
+                ),
+              ),
+            ),
           ),
         );
       },

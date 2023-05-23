@@ -9,21 +9,21 @@ class ProductRepository {
   static Future<Map> addProduct(Product product) async {
     final body = product.toJson();
     final jwt = await JwtProvider.getJwt();
-    final Response response = await DataProvider.postData('add-product', body, jwt: jwt);
+    final Response response = await DataProvider.postData('add-product/admin', body, jwt: jwt);
     final data = {'data': Product.fromMap(json.decode(response.body)['data']), 'status': response.statusCode};
     return data;
   }
 
   static Future<Map> getProduct(String id) async {
     final jwt = await JwtProvider.getJwt();
-    final Response response = await DataProvider.getData('product/$id', jwt: jwt);
+    final Response response = await DataProvider.getData('product/$id/admin', jwt: jwt);
     final data = {'data': Product.fromMap(json.decode(response.body)['data']), 'status': response.statusCode};
     return data;
   }
 
   static Future<Map> getAllProducts() async {
     final jwt = await JwtProvider.getJwt();
-    final Response response = await DataProvider.getData('products', jwt: jwt);
+    final Response response = await DataProvider.getData('products/admin', jwt: jwt);
     final List products = json.decode(response.body)['data'];
     final List<Product> data = products.map((e) => Product.fromMap(e)).toList();
     return {'data': data, 'status': response.statusCode};
@@ -31,7 +31,7 @@ class ProductRepository {
 
   static Future<String> deleteProduct(String id) async {
     final jwt = await JwtProvider.getJwt();
-    final Response response = await DataProvider.deleteData('delete-product', id, jwt: jwt);
+    final Response response = await DataProvider.deleteData('delete-product/admin', id, jwt: jwt);
     final data = json.decode(response.body)['data'];
     return data;
   }

@@ -25,6 +25,10 @@ class AuthBloc extends Bloc<AuthEvents, Map> {
       final Map data = await AuthRepository.resetPassword(event.email, event.otp, event.password);
       emit(data);
     });
+
+    on<ResetAuthEvent>((event, emit) {
+      emit({});
+    });
   }
 }
 
@@ -49,6 +53,11 @@ class UserBloc extends Bloc<AuthEvents, User> {
   UserBloc(User user) : super(user) {
     on<AlreadyAuthEvent>((event, emit) async {
       final Map data = await AuthRepository.getUser();
+      emit(data['data']);
+    });
+
+    on<UpdateUserEvent>((event, emit) async {
+      final Map data = await AuthRepository.updateUser(event.user);
       emit(data['data']);
     });
   }

@@ -1,3 +1,5 @@
+import 'package:admin_shop/domain/models/user.dart';
+
 abstract class AuthEvents {}
 
 abstract class AuthStatusEvents {}
@@ -28,6 +30,13 @@ class ResetEvent extends AuthEvents {
 }
 
 class AlreadyAuthEvent extends AuthEvents {}
+
+class UpdateUserEvent extends AuthEvents {
+  User user;
+  UpdateUserEvent(this.user);
+}
+
+class ResetAuthEvent extends AuthEvents {}
 
 class AuthStateEvent extends AuthStatusEvents {}
 

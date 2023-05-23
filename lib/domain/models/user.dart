@@ -2,13 +2,14 @@
 import 'dart:convert';
 import 'package:equatable/equatable.dart';
 
+// ignore: must_be_immutable
 class User extends Equatable {
   final String id;
   final String name;
   final String email;
-  final String? imageUrl;
+  String? imageUrl;
 
-  const User(this.id, this.name, this.email, [this.imageUrl = '']);
+  User(this.id, this.name, this.email, [this.imageUrl = '']);
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{

@@ -30,7 +30,7 @@ class DeleteProductBloc extends Bloc<ProductEvents, String> {
   DeleteProductBloc() : super('') {
     on<DeleteProductEvent>((event, emit) async {
       final data = await ProductRepository.deleteProduct(event.id);
-      emit('data');
+      emit(data);
     });
   }
 }
