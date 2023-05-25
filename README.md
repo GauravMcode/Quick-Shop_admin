@@ -14,7 +14,7 @@ Also see :
 - Metrics consisting of bar graph  and pie chart representing category-wise:
     - Inventory Cost Distribution
     - Revenue & sales along with Seller's milestone
-    - Views by unique users
+    - Views by unique users to know attention a product & category is getting
 - Sign out
 
 ## Folder Structre:
@@ -138,12 +138,12 @@ App bar with Inventory Cost Metrics and general details of admin trade. The body
 </pre>
 
 ### Product :
-View Product, Add a Prodcut, update product, delete product.
+View Produc , Add a Prodcut, update product, delete product.
 
 
 <pre>
 <p align="center">
-    <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/e146b47f-3371-4b90-9bc1-c200a2750408" width="250" height="500" alt="Quickly-admin-crud" >            <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/c722f8f6-bec7-4128-8f71-d1df2bb288a1" width="250" height="500" alt="add-product" >      <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/7fb82647-1677-4dd8-8175-fc6d4feb8645" width="250" height="500" alt="update-product" >             <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/591e26e4-8459-429d-ad65-53fba88c94b9" width="250" height="500" alt="delete-product" >
+    <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/e146b47f-3371-4b90-9bc1-c200a2750408" width="250" height="500" alt="Quickly-admin-crud" >           <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/210bba52-fab2-4521-9a92-29488f7d4e42" width="250" height="500" alt="product" >         <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/c722f8f6-bec7-4128-8f71-d1df2bb288a1" width="250" height="500" alt="add-product" >         <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/7fb82647-1677-4dd8-8175-fc6d4feb8645" width="250" height="500" alt="update-product" >             <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/591e26e4-8459-429d-ad65-53fba88c94b9" width="250" height="500" alt="delete-product" >
 </p>
 </pre>
 
