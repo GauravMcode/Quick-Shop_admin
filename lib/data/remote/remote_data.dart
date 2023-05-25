@@ -1,6 +1,6 @@
 import 'package:http/http.dart' as http;
 
-String url = 'http://10.0.2.2:3000';
+String url = 'https://quick-shopapi-production.up.railway.app'; //http://10.0.2.2:3000'
 
 class DataProvider {
   static postData(String endpoint, body, {jwt = ""}) async {
@@ -18,3 +18,7 @@ class DataProvider {
     return response;
   }
 }
+
+// urls:
+// https://quick-shopapi-production.up.railway.app
+// http://10.0.2.2:3000
