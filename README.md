@@ -6,7 +6,7 @@ Also see :
    **User App** : [Quickly](https://github.com/GauravMcode/Quick-Shop_user)<br>
    **Rest-Api**  : [Quickly Api](https://github.com/GauravMcode/Quick-shop_API)  
 
-## Core feautures of User App :
+## Core feautures of Admin App :
 - Create Account & recieve Welcome email
 - Log-in to account & Reset password using OTP through email
 - Display list of admin products 
