@@ -132,3 +132,8 @@ App bar with Inventory Cost Metrics and general details of admin trade. The body
     <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/71482398-779c-4d39-882e-754919f7511e" width="250" height="500" alt="Quickly-admin-homepage" >            <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/def2a5d9-a5ab-4785-86a9-d38f858e5e89" width="250" height="500" alt="sales" >      <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/477d8080-51d9-47de-b920-7c35d6f4772c" width="250" height="500" alt="views" >             <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/73deda93-f327-4866-bdcb-c929b1eb2d63" width="250" height="500" alt="profile" >
 </p>
 </pre>
+
+### Product :
+View Product, Add a Prodcut, update product, delete product.
+
+
