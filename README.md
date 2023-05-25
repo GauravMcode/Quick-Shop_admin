@@ -2,6 +2,10 @@
 
 Admin Application for the Full Stack Online Marketplace Project **Quickly**. This App has been built using **Flutter** and uses **Node.js's Express framework** based REST-API for backend server, which in turn uses **MongoDB** as Database.
 
+Also see :
+   **User App** : [Quickly](https://github.com/GauravMcode/Quick-Shop_user)<br>
+   **Rest-Api**  : [Quickly Api](https://github.com/GauravMcode/Quick-shop_API)  
+
 ## Core feautures of User App :
 - Create Account & recieve Welcome email
 - Log-in to account & Reset password using OTP through email
@@ -135,5 +139,12 @@ App bar with Inventory Cost Metrics and general details of admin trade. The body
 
 ### Product :
 View Product, Add a Prodcut, update product, delete product.
+
+
+<pre>
+<p align="center">
+    <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/e146b47f-3371-4b90-9bc1-c200a2750408" width="250" height="500" alt="Quickly-admin-crud" >            <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/c722f8f6-bec7-4128-8f71-d1df2bb288a1" width="250" height="500" alt="add-product" >      <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/7fb82647-1677-4dd8-8175-fc6d4feb8645" width="250" height="500" alt="update-product" >             <img src="https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/591e26e4-8459-429d-ad65-53fba88c94b9" width="250" height="500" alt="delete-product" >
+</p>
+</pre>
 
 
