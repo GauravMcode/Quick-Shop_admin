@@ -2,7 +2,7 @@
 
 Admin Application for the Full Stack Online Marketplace Project **Quickly**. This App has been built using **Flutter** and uses **Node.js's Express framework** based REST-API for backend server, which in turn uses **MongoDB** as Database.
   
-  
+**Download .apk for this app** : [Quickly admin](https://apkfab.com/quickly-admin/com.example.admin_shop/apk?h=75201492ffc43b4a568cc4fb5012dd8a84fcb6b057c46047c890289ed1d3d6f9)
 
 https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/449ed980-0aa6-4044-9920-9b0ec188e2b9
 
