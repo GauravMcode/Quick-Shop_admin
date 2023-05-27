@@ -18,3 +18,5 @@ class DeleteProductEvent extends ProductEvents {
 }
 
 class GetAllProductsEvent extends ProductEvents {}
+
+class ResetProductsEvent extends ProductEvents {}

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:admin_shop/domain/models/product.dart';
 import 'package:admin_shop/presentation/Bloc/bloc/metric_bloc.dart';
 import 'package:admin_shop/presentation/Bloc/bloc/product_bloc.dart';
+import 'package:admin_shop/presentation/Bloc/events/product_events.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 
 import 'package:flutter/material.dart';
@@ -176,6 +177,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                     onPressed: () {
                                       context.read<AuthStatusBloc>().add(SignOutEvent());
                                       context.read<AuthStatusBloc>().add(AuthStateEvent());
+                                      context.read<ProductListBloc>().add(ResetProductsEvent());
                                       Navigator.of(context).pushReplacementNamed('/start');
                                     },
                                     label: const Text('Sign Out', style: TextStyle(fontWeight: FontWeight.bold)),

@@ -23,6 +23,9 @@ class ProductListBloc extends Bloc<ProductEvents, Map> {
       final data = await ProductRepository.getAllProducts();
       emit(data);
     });
+    on<ResetProductsEvent>((event, emit) {
+      emit({});
+    });
   }
 }
 
