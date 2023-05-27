@@ -24,14 +24,14 @@ class ProductRepository {
   static Future<Map> getAllProducts() async {
     final jwt = await JwtProvider.getJwt();
     final Response response = await DataProvider.getData('products/admin', jwt: jwt);
-    final List products = json.decode(response.body)['data'];
+    final List products = json.decode(response.body)['data'] ?? [];
     final List<Product> data = products.map((e) => Product.fromMap(e)).toList();
     return {'data': data, 'status': response.statusCode};
   }
 
   static Future<String> deleteProduct(String id) async {
     final jwt = await JwtProvider.getJwt();
-    final Response response = await DataProvider.deleteData('delete-product/admin', id, jwt: jwt);
+    final Response response = await DataProvider.deleteData('delete-product/$id/admin', id, jwt: jwt);
     final data = json.decode(response.body)['data'];
     return data;
   }

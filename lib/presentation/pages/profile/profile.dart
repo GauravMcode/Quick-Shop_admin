@@ -77,109 +77,112 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(color: Theme.of(context).primaryColorDark, fontSize: 20, fontWeight: FontWeight.bold),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 15),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Text('Name :'),
-                                const SizedBox(width: 50),
-                                Text(
-                                  userState.name,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Text('Email :'),
-                                const SizedBox(width: 50),
-                                Text(
-                                  userState.email,
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColorDark,
-                                    fontSize: 20,
+                        child: FittedBox(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 15),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text('Name :'),
+                                  const SizedBox(width: 50),
+                                  Text(
+                                    userState.name,
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Text('Products :'),
-                                const SizedBox(width: 50),
-                                Text(
-                                  products.length.toString(),
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 255, 233, 169),
-                                    fontSize: 20,
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text('Email :'),
+                                  const SizedBox(width: 50),
+                                  Text(
+                                    userState.email,
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColorDark,
+                                      fontSize: 20,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Text('Units :'),
-                                const SizedBox(width: 70),
-                                Text(
-                                  units.toString(),
-                                  style: const TextStyle(
-                                    color: Color.fromARGB(255, 0, 61, 167),
-                                    fontSize: 20,
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text('Products :'),
+                                  const SizedBox(width: 50),
+                                  Text(
+                                    products.length.toString(),
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 255, 233, 169),
+                                      fontSize: 20,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 25),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Text('Inventory :'),
-                                const SizedBox(width: 35),
-                                Text(
-                                  '₹ ${numberFormat.format(price)}',
-                                  style: const TextStyle(
-                                    color: Colors.red,
-                                    fontSize: 20,
+                                ],
+                              ),
+                              const SizedBox(height: 20),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text('Units :'),
+                                  const SizedBox(width: 70),
+                                  Text(
+                                    units.toString(),
+                                    style: const TextStyle(
+                                      color: Color.fromARGB(255, 0, 61, 167),
+                                      fontSize: 20,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 25),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                const Text('Revenue :'),
-                                const SizedBox(width: 35),
-                                Text(
-                                  '₹ ${numberFormat.format(revenue)}',
-                                  style: const TextStyle(
-                                    color: Colors.green,
-                                    fontSize: 20,
+                                ],
+                              ),
+                              const SizedBox(height: 25),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text('Inventory :'),
+                                  const SizedBox(width: 35),
+                                  Text(
+                                    '₹ ${numberFormat.format(price)}',
+                                    style: const TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 20,
+                                    ),
                                   ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 25),
-                            SizedBox(
-                                width: MediaQuery.of(context).size.width,
-                                child: ElevatedButton.icon(
-                                  icon: const Icon(Icons.logout),
-                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                                  onPressed: () {
-                                    context.read<AuthStatusBloc>().add(SignOutEvent());
-                                    context.read<AuthStatusBloc>().add(AuthStateEvent());
-                                    Navigator.of(context).pushReplacementNamed('/start');
-                                  },
-                                  label: const Text('Sign Out', style: TextStyle(fontWeight: FontWeight.bold)),
-                                )),
-                            const SizedBox(height: 100),
-                          ],
+                                ],
+                              ),
+                              const SizedBox(height: 25),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  const Text('Revenue :'),
+                                  const SizedBox(width: 35),
+                                  Text(
+                                    '₹ ${numberFormat.format(revenue)}',
+                                    style: const TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 20,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 25),
+                              SizedBox(
+                                  width: MediaQuery.of(context).size.width,
+                                  child: ElevatedButton.icon(
+                                    icon: const Icon(Icons.logout),
+                                    style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                                    onPressed: () {
+                                      context.read<AuthStatusBloc>().add(SignOutEvent());
+                                      context.read<AuthStatusBloc>().add(AuthStateEvent());
+                                      Navigator.of(context).pushReplacementNamed('/start');
+                                    },
+                                    label: const Text('Sign Out', style: TextStyle(fontWeight: FontWeight.bold)),
+                                  )),
+                              const SizedBox(height: 100),
+                            ],
+                          ),
                         ),
                       ),
                     ),

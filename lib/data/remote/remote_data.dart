@@ -14,7 +14,7 @@ class DataProvider {
   }
 
   static deleteData(String endpoint, String id, {jwt = ""}) async {
-    final http.Response response = await http.delete(Uri.parse('$url/$endpoint/$id'), headers: {"Content-Type": "application/json", "Authorization": jwt});
+    final http.Response response = await http.delete(Uri.parse('$url/$endpoint'), headers: {"Content-Type": "application/json", "Authorization": jwt});
     return response;
   }
 }

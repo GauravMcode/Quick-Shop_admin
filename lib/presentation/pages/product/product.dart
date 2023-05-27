@@ -70,17 +70,9 @@ class _ProductPageState extends State<ProductPage> {
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [Text('Price: \$ ${product.price}'), Text('Qty. : ${product.quantity}')],
+                          children: [Text('Price: ₹ ${product.price}'), Text('Qty. : ${product.quantity}')],
                         ),
                         const SizedBox(height: 10),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                        //   children: [
-                        //     Chip(avatar: const Icon(Icons.money_outlined), label: Text('Units sold: ${product.sales}')),
-                        //     Chip(avatar: const Icon(Icons.remove_red_eye_sharp), label: Text('views: ${product.views}')),
-                        //   ],
-                        // ),
                         const SizedBox(height: 10),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,

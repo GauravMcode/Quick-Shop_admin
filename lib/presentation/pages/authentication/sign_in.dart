@@ -85,7 +85,7 @@ class _SignInPageState extends State<SignInPage> {
                                   }),
                                 ),
                                 const SizedBox(height: 20),
-                                FormFieldInput('Password', false, _passwordController),
+                                FormFieldInput('Password', true, _passwordController),
                                 const SizedBox(height: 20),
                                 state['status'] != 200 && state['message'] != null
                                     ? Text(

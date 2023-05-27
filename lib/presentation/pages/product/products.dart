@@ -1,5 +1,6 @@
 import 'package:admin_shop/domain/models/product.dart';
 import 'package:admin_shop/presentation/Bloc/bloc/product_bloc.dart';
+import 'package:admin_shop/presentation/Bloc/events/product_events.dart';
 import 'package:admin_shop/presentation/widgets/products/products_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,11 @@ class ProductsPage extends StatefulWidget {
 class _ProductsPageState extends State<ProductsPage> {
   NumberFormat numberFormat = NumberFormat.decimalPattern('hi');
   final TooltipBehavior _tooltipBehavior = TooltipBehavior();
+  @override
+  void initState() {
+    super.initState();
+    context.read<ProductListBloc>().add(GetAllProductsEvent());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,46 +43,50 @@ class _ProductsPageState extends State<ProductsPage> {
           }
         }
         final List<InventoryData> dataList = state.isNotEmpty ? List.generate(data.length, (index) => InventoryData(data.keys.elementAt(index), data.values.elementAt(index))) : [];
-        print(data);
-        return products.isEmpty
+        print(products);
+        return state['status'] != 200
             ? Center(
                 child: Lottie.asset('assets/143310-loader.json'),
               )
-            : SafeArea(
-                child: Scaffold(
-                  body: CustomScrollView(
-                    slivers: [
-                      ProductsAppBar(products: products, units: units, numberFormat: numberFormat, price: price, tooltipBehavior: _tooltipBehavior, dataList: dataList),
-                      state.isEmpty
-                          ? const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()))
-                          : SliverList(
-                              delegate: SliverChildListDelegate.fixed([
-                                StaggeredGrid.count(
-                                  crossAxisCount: 2,
-                                  mainAxisSpacing: 12,
-                                  children: List.generate(
-                                      products.length,
-                                      (index) => InkWell(
-                                            onTap: () => Navigator.of(context).pushNamed('/product', arguments: products[index]),
-                                            child: Card(
-                                              elevation: 40,
-                                              color: Colors.black.withOpacity(0.8),
-                                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                                              child: Column(
-                                                children: [
-                                                  ProductImage(products: products, index: index),
-                                                  ProductOverview(products: products, index: index),
-                                                ],
-                                              ),
-                                            ),
-                                          )),
+            : products.isEmpty
+                ? Center(
+                    child: Text('Add Products & start selling :)', style: TextStyle(color: Theme.of(context).primaryColorDark)),
+                  )
+                : SafeArea(
+                    child: Scaffold(
+                      body: CustomScrollView(
+                        slivers: [
+                          ProductsAppBar(products: products, units: units, numberFormat: numberFormat, price: price, tooltipBehavior: _tooltipBehavior, dataList: dataList),
+                          state.isEmpty
+                              ? const SliverToBoxAdapter(child: Center(child: CircularProgressIndicator()))
+                              : SliverList(
+                                  delegate: SliverChildListDelegate.fixed([
+                                    StaggeredGrid.count(
+                                      crossAxisCount: 2,
+                                      mainAxisSpacing: 12,
+                                      children: List.generate(
+                                          products.length,
+                                          (index) => InkWell(
+                                                onTap: () => Navigator.of(context).pushNamed('/product', arguments: products[index]),
+                                                child: Card(
+                                                  elevation: 40,
+                                                  color: Colors.black.withOpacity(0.8),
+                                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                                                  child: Column(
+                                                    children: [
+                                                      ProductImage(products: products, index: index),
+                                                      ProductOverview(products: products, index: index),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )),
+                                    ),
+                                  ]),
                                 ),
-                              ]),
-                            ),
-                    ],
-                  ),
-                ),
-              );
+                        ],
+                      ),
+                    ),
+                  );
       },
     );
   }

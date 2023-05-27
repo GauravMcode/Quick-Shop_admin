@@ -76,6 +76,7 @@ class _AddProductPageState extends State<AddProductPage> {
               await _storageref.delete();
               _imageUrl = '';
             }
+            context.read<ProductBloc>().add(GetAllProductsEvent());
             return true;
           },
           child: SafeArea(
@@ -136,7 +137,7 @@ class _AddProductPageState extends State<AddProductPage> {
                                     FocusManager.instance.primaryFocus?.unfocus();
                                   },
                                   decoration: InputDecoration(
-                                    hintText: 'Your Review',
+                                    hintText: 'Description',
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(40)),
                                     fillColor: Colors.white,
                                     hintStyle: TextStyle(color: Theme.of(context).primaryColor),
