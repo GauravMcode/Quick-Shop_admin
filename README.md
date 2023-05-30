@@ -6,7 +6,7 @@ Admin Application for the Full Stack Online Marketplace Project **Quickly**. Thi
 
 https://github.com/GauravMcode/Quick-Shop_admin/assets/51371766/449ed980-0aa6-4044-9920-9b0ec188e2b9
 
-
+This frontend App is built using Flutt er following the Bloc pattern and Bloc state management keeping in mind clean architecture.
   
 Also see :
    **User App** : [Quickly](https://github.com/GauravMcode/Quick-Shop_user)<br>
